@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $host = "localhost";
 $username = "root";
 $password = "";
@@ -33,7 +33,13 @@ $result = mysqli_query($conn, $query);
 if (!$result) {
     die("Query gagal: " . mysqli_error($conn));
 }
+//Periksa apakah pengguna telah login
+if (!isset($_SESSION['user'])) {
+header("Location: login.php");
+exit();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -46,9 +52,11 @@ if (!$result) {
 <body>
     <div class="container">
         <h2 class="mt-4">Tabel Pengguna</h2>
+
         <div class="row">
             <div class="col-md-12 ">
                 <div class="float-end">
+                    <a href="logout.php" class="btn btn-secondary mb-3">Logout</a>
                     <a href="tambah_user.php" class="btn btn-primary mb-3">Tambah Data</a>
                 </div>
             </div>
